@@ -1,4 +1,4 @@
-$dataCatalog = 'http://sqlavengers.stcu.local:15156/'
+$dataCatalog = 'http://[data catalog FQDN]:15156/'
 $sqlinstance = 'sqlavengers\hawkeye' #Read-Host -Prompt 'Please enter SQL instance with the target database.'
 $database = 'WideWorldImportersDW' #Read-Host -Prompt 'Enter the target database name'
 
