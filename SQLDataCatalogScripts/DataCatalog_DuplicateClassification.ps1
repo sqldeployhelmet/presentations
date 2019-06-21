@@ -11,7 +11,7 @@
 
 #>
 
-$dataCatalog = 'http://sqlavengers.stcu.local:15156/'
+$dataCatalog = 'http://[sqlavengers FQDN]:15156/'
 $sourceSQLinstance = 'sqlavengers\hawkeye' 
 $sourceDatabase = 'WideWorldImporters' 
 $targetSQLInstance = 'sqlavengers\hawkeye' 
