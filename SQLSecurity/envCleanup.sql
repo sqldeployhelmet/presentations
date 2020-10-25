@@ -1,6 +1,17 @@
 /* Pre-Demo Cleanup */
-IF EXISTS (SELECT * FROM sys.server_principals WHERE [name] = 'myNewLogin')
-	DROP LOGIN [myNewLogin];
+IF EXISTS (SELECT * FROM sys.server_principals WHERE [name] = 'Rona')
+	DROP LOGIN [Rona]
+
+ALTER ROLE sysAdmin DROP MEMBER Rona
+CREATE LOGIN Rona WITH PASSWORD = 'myAwesomePassword'
+
+IF EXISTS (SELECT * FROM sys.server_principals WHERE [name] = 'Jaime')
+	DROP LOGIN [Jaime]
+
+CREATE LOGIN Jaime WITH PASSWORD = 'yourAwesomePassword'
+
+IF EXISTS (SELECT * FROM sys.server_principals WHERE [name] = 'TKtheFish')
+	DROP LOGIN [TKtheFish];
 
 IF EXISTS (SELECT * FROM sys.server_principals WHERE [name] = 'myOtherNewLogin')
 	DROP LOGIN [myOtherNewLogin];
@@ -29,12 +40,29 @@ IF EXISTS (SELECT * FROM sys.databases WHERE [name] = 'safeToDrop')
 USE WideWorldImporters;
 GO
 
+EXEC sp_changedbowner 'sa'
+
 IF EXISTS (SELECT * FROM sys.database_principals WHERE [name] = 'Chad')
 BEGIN
 	REVOKE SHOWPLAN TO Chad;
 	DROP USER [Chad];
 END
 GO
+
+IF EXISTS (SELECT * FROM sys.database_principals WHERE [name] = 'Rona')
+BEGIN
+	ALTER ROLE db_owner DROP MEMBER Rona;
+	ALTER ROLE db_reader DROP MEMBER Rona;
+
+	REVOKE SELECT ON Sales.Orders TO Rona;
+	DROP USER [Rona];
+END
+
+
+IF EXISTS (SELECT * FROM sys.database_principals WHERE [name] = 'Jaime')
+BEGIN
+	DROP USER [Jaime];
+END
 
 USE AdvWorksDWViews;
 GO
@@ -70,4 +98,5 @@ RECONFIGURE
 EXEC sp_configure 'max degree of parallelism', 2;
 EXEC sp_configure 'show advanced options', 0;
 RECONFIGURE;
+
 
